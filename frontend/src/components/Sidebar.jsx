@@ -21,6 +21,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     Booking_Management: false,
     Product_Management: false,
     Staff_Management: false,
+    Category: false,
     Driver_Wallet: false,
     Settings_and_Configuration: false,
     Category_Management: false,
@@ -50,10 +51,13 @@ const Sidebar = ({ isSidebarOpen }) => {
   const reportsList = [
     { name: "Wallet", path: "/van-delivery-boy" },
     {name: "Order History", path:'/delivery-boys-history'},
-    {name: "Order Details", path:'/order-details'}
+    {name: "Order Details", path:'/order-details'},
    
   ];
-
+  const CategoryList=[
+    {name: "Category", path:'/category-page'}, 
+    {name: "Show all Items", path:'/all-category-items'},
+  ]
   return (
     <div
       className={`bg-gradient-to-b from-red-500 to-red-700 text-white h-screen w-64 fixed top-16 left-0 overflow-y-auto transition-all duration-300 shadow-lg ${
@@ -236,7 +240,41 @@ const Sidebar = ({ isSidebarOpen }) => {
             )}
           </li>
         )}
-
+     {/* Category*/}
+        
+          {(isAdmin || hasPermissionFor("Category", "view")) && (
+          <li>
+            <div
+              className="p-3 flex justify-between items-center cursor-pointer hover:bg-red-800 rounded-lg transition-colors duration-200"
+              onClick={() => toggleDropdown("Category")}
+            >
+              <div className="flex items-center space-x-3">
+                <FaTachometerAlt className="text-lg" />
+                <span className="text-sm font-medium">Category</span>
+              </div>
+              {dropdowns.Category ? (
+                <FaAngleUp className="text-lg" />
+              ) : (
+                <FaAngleDown className="text-lg" />
+              )}
+            </div>
+            {dropdowns.Category && (
+              <ul className="space-y-1 bg-white text-gray-800 rounded-md p-2 ml-2 shadow-inner">
+                {hasPermissionFor("ExpenseCategory", "manage") &&
+                  CategoryList.map((report) => (
+                    <li
+                      key={report.name}
+                      className="p-2 flex items-center space-x-2 cursor-pointer hover:bg-red-100 rounded-md text-sm transition-colors duration-200"
+                      onClick={() => navigate(report.path)}
+                    >
+                      <FaCartPlus />
+                      <span>{report.name}</span>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </li>
+        )}
         {/* Driver Valut */}
         {(isAdmin || hasPermissionFor("Driver_Wallet", "view")) && (
           <li>

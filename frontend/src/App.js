@@ -4,7 +4,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import UserLogin from "./pages/UserLogin";
 import CustomerOrders from "./pages/CustomerOrders";
-import Booking from './components/Booking/booking';
+import Booking from './components/Booking/BookingOrder';
 import ItemOrderPage from "./components/Order/ItemOrderPage";
 import ProductCard from "./components/Product/ProductCard";
 import AddDeliveryBoy from "./components/AddDelveryBoy/AddDeliveryBoy";
@@ -18,6 +18,8 @@ import OrderDetails from "./components/VanDelivery/OrderDetails";
 import AdminSlotBooking from './components/DeliverySlotBooking/AdminSlotBooking';
 import BookingSlotPage from './components/DeliverySlotBooking/BookingSlotPage';
 import UserSlotPage from "./components/DeliverySlotBooking/UserSlotPage";
+import CategoryPage from "./components/Category/CategoryPage";
+import AllCategoryItems from "./components/Category/AllCategoryItems";
 function App() {
   return (
     <Router>
@@ -41,6 +43,8 @@ function App() {
         <Route path="/delivery-slot-booking" element={<AdminSlotBooking/>} />
         <Route path="/booking-slot-page" element={<BookingSlotPage/>} />
         <Route path="/user-slot-page" element={<UserSlotPage/>} />
+        <Route path="/category-page" element={<CategoryPage/>} />
+        <Route path="/all-category-items" element={<AllCategoryItems/>} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>

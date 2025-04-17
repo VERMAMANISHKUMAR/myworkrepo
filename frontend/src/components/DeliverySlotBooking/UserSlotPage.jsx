@@ -47,7 +47,7 @@ const UserSlotPage = () => {
     setSelectedSlotIndex(null);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedDateIndex === null) {
       toast.error("Please select a date.");
       return;
@@ -63,9 +63,36 @@ const UserSlotPage = () => {
       ? `${selectedInstantDelivery.minutes} min (Instant Delivery)`
       : slots[selectedSlotIndex].time;
 
-    toast.success(
-      `Booking confirmed on ${selectedDate.day}, ${selectedDate.date} at ${slot}`
-    );
+    const bookingData = {
+      date: selectedDate.date,
+      day: selectedDate.day,
+      slot: slot,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/api/userslot/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(`Booking confirmed on ${selectedDate.day}, ${selectedDate.date} at ${slot}`);
+        // Optional: Reset selection after success
+        setSelectedDateIndex(null);
+        setSelectedSlotIndex(null);
+        setSelectedInstantDelivery(null);
+      } else {
+        toast.error(data.message || "Failed to book slot.");
+      }
+    } catch (error) {
+      toast.error("Something went wrong! Please try again.");
+      console.error("Booking Error:", error);
+    }
   };
 
   return (
@@ -102,7 +129,6 @@ const UserSlotPage = () => {
               }`}
             >
               <div className="font-medium">{slot.time}</div>
-              <div className="text-sm text-gray-600"></div>
             </div>
           ))}
         </div>
