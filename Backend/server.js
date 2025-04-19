@@ -16,6 +16,7 @@ const mybookingRoutes = require('./routes/mybookingRoutes');
 const vandeliveryBoyRoutes = require('./routes/VandeliveryBoyRoutes');
 const deliverySlotRoutes = require('./routes/deliverySlotRoutes');
 const userslotpageRoutes = require("./routes/UserSlotPageRoutes");
+const categoryRoutes = require('./routes/CategoryPageRouter');
 const app = express();
 
 app.use(cors({
@@ -51,9 +52,8 @@ app.use('/api', Add_deliveryBoyRoutes);
 app.use('/api', mybookingRoutes);
 app.use('/api/van-delivery-boys',vandeliveryBoyRoutes);
 app.use('/api', deliverySlotRoutes);
-
 app.use("/api/userslot",userslotpageRoutes);
-
+app.use('/api', categoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
